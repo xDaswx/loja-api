@@ -3,7 +3,7 @@ import {Model,DataTypes} from "sequelize";
 
 export interface AdsModel extends Model{
     id:number,
-    creatorUserId:string,
+    creatorUserId:number,
     state:string,
     category:string,
     images: Array<object>,
