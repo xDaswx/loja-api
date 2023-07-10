@@ -26,7 +26,7 @@ export const Ads = sequelize.define<AdsModel>('Ads',{
     },
     creatorUserId:{
         allowNull:false,
-        type:DataTypes.STRING
+        type:DataTypes.INTEGER
     },
     state:{
         type:DataTypes.STRING
