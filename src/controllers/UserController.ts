@@ -1,7 +1,7 @@
 import { Request,Response } from "express"
 import { Users } from "../models/usersModel"
 import { States } from "../models/statesModel"
-import { Ads } from "../models/adsModel"
+import { Ads,AdsModel } from "../models/adsModel"
 
 import { sequelize } from "../connection/db_connection"
 
@@ -17,17 +17,23 @@ const getInfo = async (req:Request,res:Response)=>{
             token
         }
     })
-    let GetAds:Array<object> = []
+    let GetAds:Array<AdsModel> = []
+    
+
     if (findUser){
+
         GetAds = await Ads.findAll({
         where:{
             creatorUserId:findUser.id
-        }
-    })
+        }})
     }
 
     res.status(200).json({
-        User:findUser,
+        User:{
+            name:findUser?.name ?? null,
+            email: findUser?.email ?? null,
+            state: findUser?.state ?? null
+        },
         Anuncios:GetAds
     })
 
