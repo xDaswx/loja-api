@@ -1,0 +1,30 @@
+MLdb-users
+- _id
+- name
+- email
+- state
+- passHashed
+- token
+
+MLdb-states
+- _id
+- name
+
+MLdb-categories 
+- _id
+- name
+- slug
+
+MLdb-ads
+- _id
+- creatorUserId
+- state
+- category
+- images [{url:string}]
+- dateCreated
+- title
+- price
+- priceNegotiable: true
+- description
+- views
+- status
