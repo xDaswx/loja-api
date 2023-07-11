@@ -1,6 +1,7 @@
 import {Router,Request,Response} from "express";
 import {CheckToken} from '../middlewares/UserMiddleware'
 import AuthValidator from "../validators/AuthValidator";
+import UserValidator from "../validators/UserValidator";
 import UserController from '../controllers/UserController'
 import AuthController from '../controllers/AuthController'
 import AdsController from '../controllers/AdsController'
@@ -22,7 +23,7 @@ router.post('/user/signin', AuthController.signin)
 router.post('/user/signup', AuthValidator.signup , AuthController.signup)
 
 router.get('/user/me', CheckToken, UserController.getInfo)
-router.put('/user/me', CheckToken, UserController.editInfo)
+router.put('/user/me', UserValidator.editUser, CheckToken,UserController.editInfo)
 
 router.get('/categories', AdsController.getCategories)
 
