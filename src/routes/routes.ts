@@ -28,6 +28,7 @@ router.put('/user/me', UserValidator.editUser, CheckToken,UserController.editInf
 router.get('/categories', AdsController.getCategories)
 
 router.post('/ad/add', CheckToken, AdsController.addAction)
+router.post('/ad/add/picture', CheckToken, AdsController.addPicture)
 router.get('/ad/list', AdsController.getList)
 router.get('/ad/item', AdsController.getItem)
 router.post('/ad/:id', CheckToken, AdsController.editAction)
