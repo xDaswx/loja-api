@@ -125,6 +125,21 @@ const addPicture = async (req:Request,res:Response)=>{
 }
 
 const getList = async (req:Request,res:Response)=>{
+    try{
+        const ads = await Ads.findAll()
+
+        if (ads){
+            return res.json({
+                ads
+
+            })
+        }
+
+    }
+    catch(err){
+        return res.status(500).json({message:"Server error"})
+    }
+    
     
 }
 
