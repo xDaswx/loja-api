@@ -34,5 +34,21 @@ export default {
             },
             errorMessage: 'O estado precisa ter um codigo de estado com 2 caracteres'
         }
+    }),
+    signin:checkSchema({
+        email:{
+            isEmail:true,
+            normalizeEmail: true,
+            errorMessage:'E-máil inválido'
+        },
+        password:{
+            isLength:{
+                options:{
+                    min:2
+                }
+                
+            },
+            errorMessage: 'Senha precisa ter no minino 2 caracteres'
+        }
     })
 }
