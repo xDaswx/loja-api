@@ -21,7 +21,9 @@ export default {
                 options:{
                     min:2
                 }
-                
+            },
+            isString:{
+                errorMessage: 'Senha precisa ser uma string'
             },
             errorMessage: 'Senha precisa ter no minino 2 caracteres'
         },
@@ -47,6 +49,9 @@ export default {
                     min:2
                 }
                 
+            },
+            isString:{
+                errorMessage: 'Senha precisa ser uma string'
             },
             errorMessage: 'Senha precisa ter no minino 2 caracteres'
         }
