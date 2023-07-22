@@ -1,12 +1,16 @@
 import { Request,Response } from "express"
 import {Categories} from "../models/categoriesModel"
 import { Ads,AdsModel } from "../models/adsModel"
+import { States } from "../models/statesModel"
 import {v4 as uuidv4} from "uuid"
 import { Users } from "../models/usersModel"
 import jimp from "jimp"
-import { parse } from "dotenv"
+import { validationResult,matchedData } from "express-validator"
 
 
+interface ImageObject {
+    url: string;
+  }
 
 
 const fixImage = async (buffer:Buffer,user_id:number) => {
@@ -170,7 +174,49 @@ const getItem = async (req:Request,res:Response)=>{
     
 }
 const editAction = async (req:Request,res:Response)=>{
+    const {id} = req.params
+    if (!id) res.status(404).json({message: "Não contem o id da postagem nos parametros"})
     
+    const errors = validationResult(req)
+    if (!errors.isEmpty()){
+        return res.status(400).json({message:errors.mapped()})
+    }
+
+    const data = matchedData(req)
+    const keys = Object.keys(data)
+    console.log(keys)
+    if (keys.length == 1){
+        return res.status(400).json({message:"Você precisa especificar o valor que deseja alterar"})
+    }
+
+    if (data.state){
+        const userStates = await States.findOne({where:{name:data.state}})
+        if(!userStates){
+            return res.json({message:`O estado ${data.state} não existe`})
+        }
+    
+    }
+    
+    if(data.images){
+        const isArray = Array.isArray(data.images);
+        const isValid = isArray && data.images.every((img: ImageObject) => typeof img === 'object' && img.hasOwnProperty('url'));
+      
+        if (!isValid) {
+            return res.status(400).json({ message: 'Campo imagens está inválido, é necessário ser um array com uma lista de objetos contendo a key url' });
+          }
+    }
+    try {
+        await Ads.update(data,{
+            where:{
+                id
+            }
+        })
+        return res.status(400).json({message:"Dados alterados com sucesso!"})
+
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({message:"Erro enquanto atualizava os dados do anuncio",error})
+    }
 }
 export = {
     getCategories,

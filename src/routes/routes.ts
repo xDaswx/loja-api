@@ -2,6 +2,7 @@ import {Router,Request,Response} from "express";
 import {CheckToken} from '../middlewares/UserMiddleware'
 import AuthValidator from "../validators/AuthValidator";
 import UserValidator from "../validators/UserValidator";
+import AdsValidator from "../validators/AdsValidator";
 import UserController from '../controllers/UserController'
 import AuthController from '../controllers/AuthController'
 import AdsController from '../controllers/AdsController'
@@ -30,8 +31,8 @@ router.get('/categories', AdsController.getCategories)
 router.post('/ad/add', CheckToken, AdsController.addAction)
 router.post('/ad/add/picture', CheckToken, AdsController.addPicture)
 router.get('/ad/list', AdsController.getList)
-router.get('/ad/item', AdsController.getItem)
-router.post('/ad/:id', CheckToken, AdsController.editAction)
+router.get('/ad/item/:id', AdsController.getItem)
+router.post('/ad/:id', CheckToken, AdsValidator.editAd, AdsController.editAction)
 
 
 
