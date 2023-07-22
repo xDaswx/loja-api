@@ -127,7 +127,6 @@ const addPicture = async (req:Request,res:Response)=>{
 const getList = async (req:Request,res:Response)=>{
     try{
         const ads = await Ads.findAll()
-
         if (ads){
             return res.json({
                 ads
@@ -144,6 +143,30 @@ const getList = async (req:Request,res:Response)=>{
 }
 
 const getItem = async (req:Request,res:Response)=>{
+    const {id} = req.params
+
+    if(id){
+        try{
+            console.log(typeof id)
+            if(Number.isInteger(id)) {
+                return res.json({message:"numero",id})
+            }
+            const ads = await Ads.findByPk(id)
+            
+            if (ads){
+                return res.json({
+                    ads
+    
+                })
+            }
+            return res.json({message:'Nenhum anuncio encontrado'})    
+        }
+        catch(err){
+            return res.status(500).json({message:"Server error"})
+        }
+    }
+
+    
     
 }
 const editAction = async (req:Request,res:Response)=>{
